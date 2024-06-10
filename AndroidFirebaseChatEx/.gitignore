@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/src/main/java/io/github/znak99/androidfirebasechatex/FirebaseConstants.kt
