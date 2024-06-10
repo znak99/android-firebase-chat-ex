@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "599477181209",
+    "project_id": "fir-chatex-1d8e4",
+    "storage_bucket": "fir-chatex-1d8e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599477181209:android:3355c6563b942a97e8c388",
+        "android_client_info": {
+          "package_name": "io.github.znak99.androidfirebasechatex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz1JKWuVXCE52601l5GU6ctbCxSavzg0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

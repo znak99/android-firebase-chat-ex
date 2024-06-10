@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidFirebaseChatEx</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="title_activity_chat_list">ChatListActivity</string>
 </resources>
