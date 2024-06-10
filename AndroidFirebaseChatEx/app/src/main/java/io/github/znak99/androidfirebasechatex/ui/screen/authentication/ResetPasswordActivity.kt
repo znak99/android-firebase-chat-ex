@@ -1,4 +1,4 @@
-package io.github.znak99.androidfirebasechatex
+package io.github.znak99.androidfirebasechatex.ui.screen.authentication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

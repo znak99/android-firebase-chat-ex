@@ -3,7 +3,7 @@ package io.github.znak99.androidfirebasechatex.dto
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class User(
+data class UserDTO(
     val uid: String? = null,
     val email: String? = null,
     val username: String? = null,
