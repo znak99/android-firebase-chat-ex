@@ -45,7 +45,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import io.github.znak99.androidfirebasechatex.dto.User
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 import io.github.znak99.androidfirebasechatex.ui.theme.AppBlack
 import io.github.znak99.androidfirebasechatex.ui.theme.AppBlue
@@ -53,6 +58,7 @@ import io.github.znak99.androidfirebasechatex.ui.theme.AppRed
 import io.github.znak99.androidfirebasechatex.ui.theme.Purple40
 import io.github.znak99.androidfirebasechatex.ui.theme.Purple80
 import kotlin.math.sign
+import kotlin.random.Random
 
 class SignUpActivity : ComponentActivity() {
 
@@ -259,19 +265,37 @@ private fun SignUpScreen(modifier: Modifier = Modifier, auth: FirebaseAuth, TAG:
                     if (email.isBlank() || username.isBlank() ||
                         password.isBlank() || passwordCheck.isBlank()) {
                         warningMessage = "※ One or more blanked fields exist"
+                        password = ""
+                        passwordCheck = ""
                     } else if (password != passwordCheck) {
                         warningMessage = "※ Mismatch password and password check"
-                    } else if (false) {
-                        warningMessage = "※ Username already exist"
+                        password = ""
+                        passwordCheck = ""
                     } else {
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(context as SignUpActivity) { task ->
                                 if (task.isSuccessful) {
                                     Log.d(TAG, "createUserWithEmail:success")
+
+                                    val database = Firebase.database(REALTIME_DB_URL)
+                                    val users = database.getReference("users")
+
+                                    users.push().setValue(
+                                        User(
+                                            uid = task.result.user?.uid,
+                                            email = task.result.user?.email,
+                                            username = username,
+                                            thumbnailPath = "",
+                                            friendsId = listOf("")
+                                        )
+                                    )
+
                                     isShowAlert = true
                                 } else {
                                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                                     warningMessage = "※ ${task.exception?.message}"
+                                    password = ""
+                                    passwordCheck = ""
                                 }
                             }
                     }
