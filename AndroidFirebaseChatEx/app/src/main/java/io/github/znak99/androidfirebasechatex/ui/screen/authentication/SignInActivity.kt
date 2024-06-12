@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -79,6 +80,7 @@ private fun SignInScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var warningMessage by rememberSaveable { mutableStateOf("") }
+    var isButtonDisabled by rememberSaveable { mutableStateOf(false) }
 
     Surface(
         modifier = modifier
@@ -122,16 +124,21 @@ private fun SignInScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
             AuthenticationSubmit(
                 text = "Sign In"
             ) {
-                signIn(
-                    email = email,
-                    password = password,
-                    auth = auth,
-                    context = context,
-                    tag = TAG,
-                    setEmail = { text -> email = text},
-                    setPassword = { text -> password = text},
-                    setWarningMessage = { text -> warningMessage = text}
-                )
+                if (!isButtonDisabled) {
+                    signIn(
+                        email = email,
+                        password = password,
+                        auth = auth,
+                        context = context,
+                        tag = TAG,
+                        setEmail = { text -> email = text},
+                        setPassword = { text -> password = text},
+                        setWarningMessage = { text -> warningMessage = text},
+                        setIsButtonDisabled = { flag -> isButtonDisabled = flag }
+                    )
+                } else {
+                    Toast.makeText(context, "Already requested to server. Wait a minute.", Toast.LENGTH_SHORT).show()
+                }
             }
 
             // Actions
@@ -167,11 +174,15 @@ private fun signIn(
     tag: String,
     setEmail: (String) -> Unit,
     setPassword: (String) -> Unit,
-    setWarningMessage: (String) -> Unit
+    setWarningMessage: (String) -> Unit,
+    setIsButtonDisabled: (Boolean) -> Unit
 ) {
     setWarningMessage("")
+    setIsButtonDisabled(true)
+
     if (email.isBlank() || password.isBlank()) { // Check blanked fields
         setWarningMessage("※ One or more blanked fields exist")
+        setIsButtonDisabled(false)
     } else { // Submit
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(context) { task ->
@@ -184,9 +195,11 @@ private fun signIn(
                     val intent = Intent(context, ListActivity::class.java)
                     context.startActivity(intent)
 
+                    setIsButtonDisabled(false)
                 } else {
                     Log.d(tag, "signInWithEmail:failure")
                     setWarningMessage("※ ${task.exception?.message}")
+                    setIsButtonDisabled(false)
                 }
             }
     }

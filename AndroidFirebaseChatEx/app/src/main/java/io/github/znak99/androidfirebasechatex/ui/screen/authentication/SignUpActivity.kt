@@ -177,6 +177,8 @@ private fun SignUpScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
                         setIsShowAlert = { flag -> isShowAlert = flag },
                         setIsButtonDisabled = { flag -> isButtonDisabled = flag }
                     )
+                } else {
+                    Toast.makeText(context, "Already requested to server. Wait a minute.", Toast.LENGTH_SHORT).show()
                 }
             }
 
