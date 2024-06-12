@@ -95,6 +95,7 @@ private fun SignUpScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
     var signedUpEmail by rememberSaveable { mutableStateOf("") }
 
     var isShowAlert by rememberSaveable { mutableStateOf(false) }
+    var isButtonDisabled by rememberSaveable { mutableStateOf(false) }
 
     Surface(
         modifier = modifier
@@ -160,20 +161,23 @@ private fun SignUpScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
             AuthenticationSubmit(
                 text = "Sign Up"
             ) {
-                signUp(
-                    email = email,
-                    username = username,
-                    password = password,
-                    passwordCheck = passwordCheck,
-                    auth = auth,
-                    context = context,
-                    tag = TAG,
-                    setPassword = { text -> password = text},
-                    setPasswordCheck = { text -> passwordCheck = text},
-                    setWarningMessage = { text -> warningMessage = text},
-                    setSignedUpEmail = { text -> signedUpEmail = text },
-                    setIsShowAlert = { flag -> isShowAlert = flag }
-                )
+                if (!isButtonDisabled) {
+                    signUp(
+                        email = email,
+                        username = username,
+                        password = password,
+                        passwordCheck = passwordCheck,
+                        auth = auth,
+                        context = context,
+                        tag = TAG,
+                        setPassword = { text -> password = text},
+                        setPasswordCheck = { text -> passwordCheck = text},
+                        setWarningMessage = { text -> warningMessage = text},
+                        setSignedUpEmail = { text -> signedUpEmail = text },
+                        setIsShowAlert = { flag -> isShowAlert = flag },
+                        setIsButtonDisabled = { flag -> isButtonDisabled = flag }
+                    )
+                }
             }
 
             if (isShowAlert) {
@@ -204,6 +208,8 @@ private fun SignUpScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
 
                                 // Dismiss to sign in activity
                                 context.finish()
+
+                                isButtonDisabled = false
                             }
                         ) {
                             Text("OK")
@@ -216,7 +222,6 @@ private fun SignUpScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
     }
 }
 
-// TODO: 코드 정리 및 제출중의 버튼 눌림 방지
 private fun signUp(
     email: String,
     username: String,
@@ -229,19 +234,23 @@ private fun signUp(
     setPasswordCheck: (String) -> Unit,
     setWarningMessage: (String) -> Unit,
     setSignedUpEmail: (String) -> Unit,
-    setIsShowAlert: (Boolean) -> Unit
+    setIsShowAlert: (Boolean) -> Unit,
+    setIsButtonDisabled: (Boolean) -> Unit
 ) {
     setWarningMessage("")
+    setIsButtonDisabled(true)
 
     if (email.isBlank() || username.isBlank() ||
         password.isBlank() || passwordCheck.isBlank()) { // Check blanked fields
         setWarningMessage("※ One or more blanked fields exist")
         setPassword("")
         setPasswordCheck("")
+        setIsButtonDisabled(false)
     } else if (password != passwordCheck) { // Check mismatch password field and password check field
         setWarningMessage("※ Mismatch password and password check")
         setPassword("")
         setPasswordCheck("")
+        setIsButtonDisabled(false)
     } else {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(context as SignUpActivity) { task ->
@@ -269,18 +278,8 @@ private fun signUp(
                     setWarningMessage("※ ${task.exception?.message}")
                     setPassword("")
                     setPasswordCheck("")
+                    setIsButtonDisabled(false)
                 }
             }
     }
-}
-
-private fun copyToClipboard(text: String) {
-
-}
-private fun dialogConfirmed() {
-
-}
-
-private fun dialogDismissRequest() {
-
 }
