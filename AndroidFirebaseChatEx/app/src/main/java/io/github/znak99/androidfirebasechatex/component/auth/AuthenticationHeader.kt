@@ -1,4 +1,4 @@
-package io.github.znak99.androidfirebasechatex.component
+package io.github.znak99.androidfirebasechatex.component.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import io.github.znak99.androidfirebasechatex.ui.theme.Purple40
 
 @Composable
-fun AuthenticationScreenHeader(
+fun AuthenticationHeader(
     title: String,
     icon: Painter,
 ) {

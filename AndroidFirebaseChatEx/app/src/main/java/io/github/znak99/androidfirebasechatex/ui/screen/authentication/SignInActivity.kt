@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Surface
@@ -20,10 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -31,11 +28,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import io.github.znak99.androidfirebasechatex.R
-import io.github.znak99.androidfirebasechatex.component.AuthenticationLink
-import io.github.znak99.androidfirebasechatex.component.AuthenticationField
-import io.github.znak99.androidfirebasechatex.component.AuthenticationScreenHeader
-import io.github.znak99.androidfirebasechatex.component.AuthenticationSubmit
-import io.github.znak99.androidfirebasechatex.component.AuthenticationWarningMessage
+import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationLink
+import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationField
+import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationHeader
+import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationSubmit
+import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationWarningMessage
 import io.github.znak99.androidfirebasechatex.ui.screen.chat.ListActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 
@@ -88,7 +85,7 @@ private fun SignInScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
     ) {
         Column {
             // Header
-            AuthenticationScreenHeader(
+            AuthenticationHeader(
                 title = "Sign In",
                 icon = signInIcon
             )
@@ -173,9 +170,9 @@ private fun signIn(
     setWarningMessage: (String) -> Unit
 ) {
     setWarningMessage("")
-    if (email.isBlank() || password.isBlank()) {
+    if (email.isBlank() || password.isBlank()) { // Check blanked fields
         setWarningMessage("※ One or more blanked fields exist")
-    } else {
+    } else { // Submit
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(context) { task ->
                 if (task.isSuccessful) {
