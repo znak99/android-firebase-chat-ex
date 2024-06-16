@@ -36,7 +36,7 @@ import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationField
 import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationHeader
 import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationSubmit
 import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationWarningMessage
-import io.github.znak99.androidfirebasechatex.ui.screen.chat.ListActivity
+import io.github.znak99.androidfirebasechatex.ui.screen.chat.FriendsListActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 
 class SignInActivity : ComponentActivity() {
@@ -206,7 +206,7 @@ private fun signIn(
                     setEmail("")
                     setPassword("")
 
-                    val intent = Intent(context, ListActivity::class.java)
+                    val intent = Intent(context, FriendsListActivity::class.java)
                     context.startActivity(intent)
 
                     context.finish()

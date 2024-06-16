@@ -20,7 +20,7 @@
             android:label="@string/title_activity_sample"
             android:theme="@style/Theme.AndroidFirebaseChatEx" />
         <activity
-            android:name=".ui.screen.chat.ListActivity"
+            android:name=".ui.screen.chat.FriendsListActivity"
             android:exported="false"
             android:label="@string/title_activity_chat_list"
             android:theme="@style/Theme.AndroidFirebaseChatEx" />

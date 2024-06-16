@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import io.github.znak99.androidfirebasechatex.ui.screen.authentication.SignInActivity
-import io.github.znak99.androidfirebasechatex.ui.screen.chat.ListActivity
+import io.github.znak99.androidfirebasechatex.ui.screen.chat.FriendsListActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 
 class MainActivity : ComponentActivity() {
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                         intent = Intent(this, SignInActivity::class.java)
                     } else { // User session exists
                         Log.d(TAG, "User session exists - navigate to ListActivity")
-                        intent = Intent(this, ListActivity::class.java)
+                        intent = Intent(this, FriendsListActivity::class.java)
                     }
 
                     startActivity(intent)

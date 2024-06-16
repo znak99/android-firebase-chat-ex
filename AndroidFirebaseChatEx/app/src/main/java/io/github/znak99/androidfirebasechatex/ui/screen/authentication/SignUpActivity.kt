@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.values
 import com.google.firebase.ktx.Firebase
 import io.github.znak99.androidfirebasechatex.R
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
@@ -260,7 +261,7 @@ private fun signUp(
                     Log.d(tag, "createUserWithEmail:success")
 
                     val database = Firebase.database(REALTIME_DB_URL)
-                    val users = database.getReference("users")
+                    val users = database.getReference("users").child(task.result.user?.uid.toString())
 
                     users.push().setValue(
                         UserDTO(
