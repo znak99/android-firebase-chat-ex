@@ -37,6 +37,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.values
 import com.google.firebase.ktx.Firebase
 import io.github.znak99.androidfirebasechatex.R
+import io.github.znak99.androidfirebasechatex.app.DEFAULT_THUMBNAIL_IMAGE
+import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
 import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationField
 import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationHeader
@@ -266,7 +268,7 @@ private fun signUp(
                             uid = task.result.user?.uid,
                             email = task.result.user?.email,
                             username = username,
-                            thumbnailPath = "",
+                            thumbnailPath = FIRESTORE_STORAGE_URL + DEFAULT_THUMBNAIL_IMAGE,
                             friendsId = listOf("")
                         )
                     )
