@@ -9,8 +9,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -37,13 +35,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -53,15 +48,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
+import io.github.znak99.androidfirebasechatex.component.chat.FriendsListHeaderMenu
 import io.github.znak99.androidfirebasechatex.dto.UserDTO
 import io.github.znak99.androidfirebasechatex.ui.screen.authentication.SignInActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
-import io.github.znak99.androidfirebasechatex.ui.theme.AppBlack
 import io.github.znak99.androidfirebasechatex.ui.theme.AppRed
 
 class FriendsListActivity : ComponentActivity() {
-
-    private val TAG = "List"
 
     // Firebase authentication
     private lateinit var auth: FirebaseAuth
@@ -100,21 +93,9 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference) {
     val currentUser = auth.currentUser
 
     var username by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
+    var menuExpanded by remember { mutableStateOf(false) } // Header menu
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
-    // System dismiss action overriding
-    var backHandlingEnabled by remember { mutableStateOf(true) }
-    var backPressedTime = 0L
-    BackHandler(backHandlingEnabled) {
-        if (System.currentTimeMillis() - backPressedTime <= 400L) { // EXIT
-            context.finish()
-        } else { // SHOW TOAST
-            Toast.makeText(context, "Press again fast to exit\n Or sign out at header menu", Toast.LENGTH_SHORT).show()
-        }
-        backPressedTime = System.currentTimeMillis()
-    }
 
     LaunchedEffect(currentUser) {
         currentUser?.let { user ->
@@ -140,6 +121,18 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference) {
         }
     }
 
+    // System dismiss action overriding
+    var backHandlingEnabled by remember { mutableStateOf(true) }
+    var backPressedTime = 0L
+    BackHandler(backHandlingEnabled) {
+        if (System.currentTimeMillis() - backPressedTime <= 400L) { // EXIT
+            context.finish()
+        } else { // SHOW TOAST
+            Toast.makeText(context, "Press again fast to exit\n Or sign out at header menu", Toast.LENGTH_SHORT).show()
+        }
+        backPressedTime = System.currentTimeMillis()
+    }
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
@@ -158,79 +151,41 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference) {
                     )
                 },
                 actions = {
-                    IconButton(onClick = { expanded = !expanded }) {
+                    IconButton(onClick = { menuExpanded = !menuExpanded }) {
                         Icon(
-                            imageVector = if (expanded) Icons.Filled.Close else Icons.Filled.Menu,
+                            imageVector = if (menuExpanded) Icons.Filled.Close else Icons.Filled.Menu,
                             contentDescription = "Menu"
                         )
                     }
 
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Person,
-                                    contentDescription = "Profile"
-                                )
-                            },
-                            text = { Text("Edit Profile") },
-                            onClick = { Toast.makeText(context, "Load", Toast.LENGTH_SHORT).show() }
-                        )
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Add,
-                                    contentDescription = "Add"
-                                )
-                            },
-                            text = { Text("Add Friend") },
-                            onClick = { Toast.makeText(context, "Load", Toast.LENGTH_SHORT).show() }
-                        )
-                        Divider()
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Close,
-                                    contentDescription = "Sign out",
-                                    tint = AppRed
-                                )
-                            },
-                            text = { Text("Sign out", color = AppRed) },
-                            onClick = {
-                                auth.signOut()
+                    FriendsListHeaderMenu(
+                        expanded = menuExpanded,
+                        setExpanded = { flag -> menuExpanded = flag},
+                        editProfileCompletion = { /*TODO*/ },
+                        addFriendCompletion = { /*TODO*/ },
+                        signOutCompletion = {
+                            auth.signOut()
 
-                                val intent = Intent(context, SignInActivity::class.java)
-                                context.startActivity(intent)
+                            val intent = Intent(context, SignInActivity::class.java)
+                            context.startActivity(intent)
 
-                                context.finish()
-                            }
-                        )
-                    }
+                            context.finish()
+                        }
+                    )
                 },
                 scrollBehavior = scrollBehavior,
             )
         },
     ) { innerPadding ->
-
-        ScrollContent(innerPadding)
-    }
-}
-
-@Composable
-fun ScrollContent(innerPadding: PaddingValues) {
-    val range = 1..100
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentPadding = innerPadding,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(range.count()) { index ->
-            Text(text = "- List item number ${index + 1}")
+        val range = 1..100
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentPadding = innerPadding,
+        ) {
+            items(range.count()) { index ->
+                Text(text = "- List item number ${index + 1}")
+            }
         }
     }
 }

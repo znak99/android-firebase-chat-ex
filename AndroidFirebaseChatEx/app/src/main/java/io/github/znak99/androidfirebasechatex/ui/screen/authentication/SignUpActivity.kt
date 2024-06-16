@@ -47,8 +47,6 @@ import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExThem
 
 class SignUpActivity : ComponentActivity() {
 
-    private val TAG = "SignIn"
-
     // Firebase authentication
     private lateinit var auth: FirebaseAuth
 
