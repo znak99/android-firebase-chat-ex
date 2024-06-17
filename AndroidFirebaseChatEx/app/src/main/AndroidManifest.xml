@@ -15,6 +15,16 @@
         android:theme="@style/Theme.AndroidFirebaseChatEx"
         tools:targetApi="31">
         <activity
+            android:name=".ui.screen.chat.AddFriendActivity"
+            android:exported="false"
+            android:label="@string/title_activity_add_friend"
+            android:theme="@style/Theme.AndroidFirebaseChatEx" />
+        <activity
+            android:name=".ui.screen.chat.AddFriendActivity"
+            android:exported="false"
+            android:label="@string/title_activity_add_friend"
+            android:theme="@style/Theme.AndroidFirebaseChatEx" />
+        <activity
             android:name=".SampleActivity"
             android:exported="false"
             android:label="@string/title_activity_sample"
@@ -38,7 +48,7 @@
             android:name=".ui.screen.authentication.SignInActivity"
             android:exported="false"
             android:label="@string/title_activity_sign_in"
-            android:theme="@style/Theme.AndroidFirebaseChatEx"></activity>
+            android:theme="@style/Theme.AndroidFirebaseChatEx" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -90,8 +90,8 @@ class FriendsListActivity : ComponentActivity() {
     // Firebase realtime database
     private lateinit var database: DatabaseReference
 
+    // Firebase firestore
     private lateinit var storage: StorageReference
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -191,7 +191,6 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -218,7 +217,10 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                         expanded = menuExpanded,
                         setExpanded = { flag -> menuExpanded = flag},
                         editProfileCompletion = { /*TODO*/ },
-                        addFriendCompletion = { /*TODO*/ },
+                        addFriendCompletion = {
+                            val intent = Intent(context, AddFriendActivity::class.java)
+                            context.startActivity(intent)
+                        },
                         signOutCompletion = {
                             auth.signOut()
 
