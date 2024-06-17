@@ -7,12 +7,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthField
 import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthHeader
@@ -30,7 +33,6 @@ import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExThem
 import io.github.znak99.androidfirebasechatex.ui.theme.AppPrimary
 import io.github.znak99.androidfirebasechatex.ui.theme.AppWarning
 import io.github.znak99.androidfirebasechatex.viewmodel.ResetPasswordViewModel
-import io.github.znak99.androidfirebasechatex.viewmodel.SignInViewModel
 
 class ResetPasswordActivity : ComponentActivity() {
 
@@ -63,7 +65,7 @@ private fun ResetPasswordScreen(viewModel: ResetPasswordViewModel = ResetPasswor
                 .padding(innerPadding)
         ) {
             // Header
-            AuthHeader(title = "Authenticate email")
+            AuthHeader(title = "Reset password")
 
             Text(
                 text = "Enter your email to reset your password",
@@ -103,6 +105,32 @@ private fun ResetPasswordScreen(viewModel: ResetPasswordViewModel = ResetPasswor
             AuthSubmitButton(text = "Send email", viewModel.isSubmitButtonDisabled) {
                 viewModel.sendResetPasswordEmail()
             }
+        }
+
+        if (viewModel.isShowEmailSentAlert) {
+            AlertDialog(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(imageVector = Icons.Filled.Person, contentDescription = "Person")
+                        Text(text = "Authentication system")
+                    }
+                },
+                text = {
+                    Text(
+                        text = "Sent you an email that you can reset your password.\n" +
+                                "Please reset your password and sign in again",
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
+                onDismissRequest = { viewModel.isShowEmailSentAlert = false },
+                confirmButton = {
+                    Button(onClick = { context.finish() }) {
+                        Text("OK")
+                    }
+                },
+            )
         }
     }
 }

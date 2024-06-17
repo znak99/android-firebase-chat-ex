@@ -9,9 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
-import io.github.znak99.androidfirebasechatex.app.REALTIME_DATABASE_URL
 
 class SignInViewModel : ViewModel() {
 
@@ -24,7 +22,6 @@ class SignInViewModel : ViewModel() {
 
     // Firebase
     private val _auth = Firebase.auth
-    private val _database = FirebaseDatabase.getInstance(REALTIME_DATABASE_URL).reference
 
     // Observable data
     var email: String by mutableStateOf("")
