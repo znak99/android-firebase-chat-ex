@@ -1,4 +1,4 @@
-package io.github.znak99.androidfirebasechatex.component.auth
+package io.github.znak99.androidfirebasechatex.ui.component.auth
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

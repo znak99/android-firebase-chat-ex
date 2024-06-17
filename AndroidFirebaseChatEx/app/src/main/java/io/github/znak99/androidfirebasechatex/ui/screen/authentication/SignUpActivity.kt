@@ -1,7 +1,6 @@
 package io.github.znak99.androidfirebasechatex.ui.screen.authentication
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -39,11 +38,11 @@ import io.github.znak99.androidfirebasechatex.R
 import io.github.znak99.androidfirebasechatex.app.DEFAULT_THUMBNAIL_IMAGE
 import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
-import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationField
-import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationHeader
-import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationSubmit
-import io.github.znak99.androidfirebasechatex.component.auth.AuthenticationWarningMessage
-import io.github.znak99.androidfirebasechatex.dto.UserDTO
+import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthenticationField
+import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthenticationHeader
+import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthenticationSubmit
+import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthenticationWarningMessage
+import io.github.znak99.androidfirebasechatex.model.firebase.User
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -81,11 +80,11 @@ private fun SignUpScreen(auth: FirebaseAuth, modifier: Modifier = Modifier) {
     val context = (LocalContext.current as Activity)
     val clipboardManager = LocalClipboardManager.current
 
-    val signUpIcon: Painter = painterResource(id = R.drawable.baseline_person_add_alt_1_24)
-    val emailIcon: Painter = painterResource(id = R.drawable.baseline_email_24)
-    val usernameIcon: Painter = painterResource(id = R.drawable.baseline_assignment_ind_24)
-    val passwordIcon: Painter = painterResource(id = R.drawable.baseline_lock_24)
-    val passwordCheckIcon: Painter = painterResource(id = R.drawable.baseline_check_box_24)
+    val signUpIcon: Painter = painterResource(id = R.drawable.ic_launcher_background)
+    val emailIcon: Painter = painterResource(id = R.drawable.ic_launcher_background)
+    val usernameIcon: Painter = painterResource(id = R.drawable.ic_launcher_background)
+    val passwordIcon: Painter = painterResource(id = R.drawable.ic_launcher_background)
+    val passwordCheckIcon: Painter = painterResource(id = R.drawable.ic_launcher_background)
 
     var email by rememberSaveable { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
@@ -263,7 +262,7 @@ private fun signUp(
                     val users = database.getReference("users").child(task.result.user?.uid.toString())
 
                     users.push().setValue(
-                        UserDTO(
+                        User(
                             uid = task.result.user?.uid,
                             email = task.result.user?.email,
                             username = username,

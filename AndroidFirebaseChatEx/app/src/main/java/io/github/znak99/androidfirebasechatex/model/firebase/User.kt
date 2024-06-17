@@ -1,10 +1,10 @@
-package io.github.znak99.androidfirebasechatex.dto
+package io.github.znak99.androidfirebasechatex.model.firebase
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class UserDTO(
+data class User(
     var uid: String? = null,
     var email: String? = null,
     var username: String? = null,

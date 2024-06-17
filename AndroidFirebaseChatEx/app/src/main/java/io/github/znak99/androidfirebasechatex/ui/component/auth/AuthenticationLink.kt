@@ -1,4 +1,4 @@
-package io.github.znak99.androidfirebasechatex.component.auth
+package io.github.znak99.androidfirebasechatex.ui.component.auth
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

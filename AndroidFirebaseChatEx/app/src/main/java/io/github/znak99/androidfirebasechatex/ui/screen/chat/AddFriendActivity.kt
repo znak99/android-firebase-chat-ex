@@ -64,7 +64,7 @@ import com.google.firebase.storage.StorageReference
 import io.github.znak99.androidfirebasechatex.app.DEFAULT_THUMBNAIL_IMAGE
 import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
-import io.github.znak99.androidfirebasechatex.dto.UserDTO
+import io.github.znak99.androidfirebasechatex.model.firebase.User
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 import io.github.znak99.androidfirebasechatex.ui.theme.AppGray
 import io.github.znak99.androidfirebasechatex.ui.theme.AppRed
@@ -115,7 +115,7 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
 
     var searchKeyword by remember { mutableStateOf("") }
     var isShowResult by remember { mutableStateOf(false) }
-    var foundUser by remember { mutableStateOf<UserDTO?>(null) }
+    var foundUser by remember { mutableStateOf<User?>(null) }
     var foundUserProfileImage by remember { mutableStateOf<String?>(null) }
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -319,13 +319,13 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
     }
 }
 
-private fun searchEmail(email: String, database: DatabaseReference, completion: (user: UserDTO?) -> Unit) {
+private fun searchEmail(email: String, database: DatabaseReference, completion: (user: User?) -> Unit) {
     val usersRef = database.child("users")
     usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             snapshot.children.forEach { uidSnapshot ->
                 uidSnapshot.children.forEach { userSnapshot ->
-                    val user = userSnapshot.getValue(UserDTO::class.java)
+                    val user = userSnapshot.getValue(User::class.java)
                     Log.d("AddFriend", user?.email.toString())
 
                     if (email == user?.email.toString()) {
@@ -339,6 +339,6 @@ private fun searchEmail(email: String, database: DatabaseReference, completion: 
     })
 }
 
-private fun addFriend(currentUser: FirebaseUser?, database: DatabaseReference, targetUser: UserDTO?) {
-    
+private fun addFriend(currentUser: FirebaseUser?, database: DatabaseReference, targetUser: User?) {
+
 }

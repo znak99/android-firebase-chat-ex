@@ -1,4 +1,4 @@
-package io.github.znak99.androidfirebasechatex.component.chat
+package io.github.znak99.androidfirebasechatex.ui.component.chat
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add

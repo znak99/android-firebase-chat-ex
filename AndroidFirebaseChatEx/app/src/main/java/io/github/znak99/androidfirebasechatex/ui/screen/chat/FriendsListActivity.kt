@@ -2,7 +2,6 @@ package io.github.znak99.androidfirebasechatex.ui.screen.chat
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -24,12 +23,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,8 +45,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -72,15 +66,12 @@ import com.google.firebase.storage.StorageReference
 import io.github.znak99.androidfirebasechatex.app.DEFAULT_THUMBNAIL_IMAGE
 import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
-import io.github.znak99.androidfirebasechatex.component.chat.FriendsListHeaderMenu
-import io.github.znak99.androidfirebasechatex.dto.UserDTO
+import io.github.znak99.androidfirebasechatex.ui.component.chat.FriendsListHeaderMenu
+import io.github.znak99.androidfirebasechatex.model.firebase.User
 import io.github.znak99.androidfirebasechatex.ui.screen.authentication.SignInActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
-import io.github.znak99.androidfirebasechatex.ui.theme.AppBlack
 import io.github.znak99.androidfirebasechatex.ui.theme.AppDarkGray
 import io.github.znak99.androidfirebasechatex.ui.theme.AppGray
-import io.github.znak99.androidfirebasechatex.ui.theme.Pink80
-import io.github.znak99.androidfirebasechatex.ui.theme.PurpleGrey40
 
 class FriendsListActivity : ComponentActivity() {
 
@@ -127,7 +118,7 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
 
     var username by remember { mutableStateOf("") }
     var userProfileImage by remember { mutableStateOf<String?>(null) }
-    var friendsList by remember { mutableStateOf<List<UserDTO>>(emptyList()) }
+    var friendsList by remember { mutableStateOf<List<User>>(emptyList()) }
     var menuExpanded by remember { mutableStateOf(false) } // Header menu
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -139,17 +130,17 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach { data ->
                         // Fetch signed in user data
-                        val userDTO = data.getValue(UserDTO::class.java)
-                        Log.d(TAG, "Username: ${userDTO?.username}")
-                        username = userDTO?.username ?: "Unknown"
+                        val user = data.getValue(User::class.java)
+                        Log.d(TAG, "Username: ${user?.username}")
+                        username = user?.username ?: "Unknown"
 
                         // Fetch signed in user's friends data
-                        userDTO?.friendsId?.map { id ->
+                        user?.friendsId?.map { id ->
                             val friendRef = database.child("users").child(id)
                             friendRef.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     snapshot.children.forEach { friendData ->
-                                        val friendDTO = friendData.getValue(UserDTO::class.java)
+                                        val friendDTO = friendData.getValue(User::class.java)
 
                                         if (friendDTO != null) {
                                             friendsList = friendsList.toMutableList().apply { add(friendDTO) }

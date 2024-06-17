@@ -15,3 +15,7 @@ val AppGray = Color(0xFFEEEEEE)
 val AppDarkGray = Color(0xFF8A8A8A)
 val AppBlue = Color(0xFF1312FC)
 val AppRed = Color(0xFFE71919)
+
+// Custom colors
+val AppDefaultBackground = Color(0xFFFDFDFD)
+val AppPrimary = Color(0xFFD67828)
