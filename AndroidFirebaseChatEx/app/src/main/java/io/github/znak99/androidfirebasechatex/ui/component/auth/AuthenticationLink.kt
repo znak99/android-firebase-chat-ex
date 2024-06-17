@@ -11,8 +11,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.znak99.androidfirebasechatex.ui.theme.AppBlack
-import io.github.znak99.androidfirebasechatex.ui.theme.AppBlue
 
 @Composable
 fun AuthenticationLink(
@@ -26,13 +24,11 @@ fun AuthenticationLink(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = description,
-                color = AppBlack,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text(
                 text = linkText,
-                color = AppBlue,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 textDecoration = TextDecoration.Underline,

@@ -10,8 +10,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import io.github.znak99.androidfirebasechatex.ui.theme.AppBlack
-import io.github.znak99.androidfirebasechatex.ui.theme.AppRed
 
 @Composable
 fun FriendsListHeaderMenu(
@@ -31,14 +29,12 @@ fun FriendsListHeaderMenu(
             text = {
                 Text(
                     text = "Edit Profile",
-                    color = AppBlack
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Person,
                     contentDescription = "Edit Profile",
-                    tint = AppBlack
                 )
             },
             onClick = { editProfileCompletion() }
@@ -48,14 +44,12 @@ fun FriendsListHeaderMenu(
             text = {
                 Text(
                     text = "Add Friend",
-                    color = AppBlack
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add Friend",
-                    tint = AppBlack
                 )
             },
             onClick = { addFriendCompletion() }
@@ -67,14 +61,12 @@ fun FriendsListHeaderMenu(
             text = {
                 Text(
                     text = "Sign Out",
-                    color = AppRed
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Close,
                     contentDescription = "Sign Out",
-                    tint = AppRed
                 )
             },
             onClick = { signOutCompletion() }

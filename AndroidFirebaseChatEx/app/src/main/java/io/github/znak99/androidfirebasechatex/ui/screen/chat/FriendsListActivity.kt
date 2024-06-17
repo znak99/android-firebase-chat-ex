@@ -70,8 +70,6 @@ import io.github.znak99.androidfirebasechatex.ui.component.chat.FriendsListHeade
 import io.github.znak99.androidfirebasechatex.model.firebase.User
 import io.github.znak99.androidfirebasechatex.ui.screen.authentication.SignInActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
-import io.github.znak99.androidfirebasechatex.ui.theme.AppDarkGray
-import io.github.znak99.androidfirebasechatex.ui.theme.AppGray
 
 class FriendsListActivity : ComponentActivity() {
 
@@ -237,7 +235,6 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
-                        .background(color = AppGray)
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                         .fillMaxWidth()
                 )
@@ -256,12 +253,7 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                             .padding(12.dp)
                             .width(48.dp)
                             .height(48.dp)
-                            .clip(CircleShape)
-                            .border(
-                                width = 2.dp,
-                                color = AppGray,
-                                shape = CircleShape
-                            ),
+                            .clip(CircleShape),
                         contentScale = ContentScale.FillBounds
                     )
                     Column {
@@ -269,7 +261,6 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                             text = currentUser?.email!!,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp,
-                            color = AppDarkGray,
                             modifier = Modifier
                                 .padding(start = 8.dp)
                         )
@@ -288,7 +279,6 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
-                        .background(color = AppGray)
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                         .fillMaxWidth()
                 )
@@ -310,12 +300,7 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                             .padding(12.dp)
                             .width(48.dp)
                             .height(48.dp)
-                            .clip(CircleShape)
-                            .border(
-                                width = 2.dp,
-                                color = AppGray,
-                                shape = CircleShape
-                            ),
+                            .clip(CircleShape),
                         contentScale = ContentScale.FillBounds
                     )
                     Column {
@@ -323,7 +308,6 @@ private fun ListScreen(auth: FirebaseAuth, database: DatabaseReference, storage:
                             text = friend.email!!,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp,
-                            color = AppDarkGray,
                             modifier = Modifier
                                 .padding(start = 8.dp)
                         )

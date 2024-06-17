@@ -66,10 +66,6 @@ import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
 import io.github.znak99.androidfirebasechatex.model.firebase.User
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
-import io.github.znak99.androidfirebasechatex.ui.theme.AppGray
-import io.github.znak99.androidfirebasechatex.ui.theme.AppRed
-import io.github.znak99.androidfirebasechatex.ui.theme.Purple40
-import io.github.znak99.androidfirebasechatex.ui.theme.Purple80
 
 class AddFriendActivity : ComponentActivity() {
 
@@ -234,11 +230,6 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
                                     .width(120.dp)
                                     .height(120.dp)
                                     .clip(CircleShape)
-                                    .border(
-                                        width = 2.dp,
-                                        color = AppGray,
-                                        shape = CircleShape
-                                    )
                                     .fillMaxWidth(),
                                 alignment = Alignment.Center,
                                 contentScale = ContentScale.FillBounds
@@ -246,12 +237,10 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
                             Column(
                                 modifier = Modifier
                                     .padding(8.dp)
-                                    .background(color = Purple80)
                                     .padding(12.dp),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
-                                Text("Username", fontWeight = FontWeight.SemiBold, color = Purple40)
                                 Text(
                                     text = foundUser?.username.toString(),
                                     textAlign = TextAlign.Center,
@@ -262,7 +251,6 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
                                     modifier = Modifier
                                         .fillMaxWidth()
                                 )
-                                Text("Email", fontWeight = FontWeight.SemiBold, color = Purple40)
                                 Text(
                                     text = foundUser?.email.toString(),
                                     textAlign = TextAlign.Center,
@@ -294,7 +282,6 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
                                 text = "Email Not Found",
                                 fontSize = 28.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = AppRed,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -305,7 +292,6 @@ private fun AddFriendScreen(auth: FirebaseAuth, database: DatabaseReference, sto
                                 text = "Please check email and try again",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = AppRed,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .fillMaxWidth()

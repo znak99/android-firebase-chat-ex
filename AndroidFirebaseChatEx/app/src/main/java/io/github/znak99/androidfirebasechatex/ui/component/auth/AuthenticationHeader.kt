@@ -16,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.znak99.androidfirebasechatex.ui.theme.Purple40
 
 @Composable
 fun AuthenticationHeader(
@@ -42,7 +41,6 @@ fun AuthenticationHeader(
                 textAlign = TextAlign.Center,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = Purple40,
                 modifier = Modifier
                     .padding(end = 8.dp)
             )
