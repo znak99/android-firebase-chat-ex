@@ -26,7 +26,7 @@ class SignInViewModel : ViewModel() {
     // Observable data
     var email: String by mutableStateOf("")
     var password: String by mutableStateOf("")
-    var warningMessage: String by mutableStateOf("Email field can not be blanked")
+    var warningMessage: String by mutableStateOf("")
     var isSaveEmailChecked: Boolean by mutableStateOf(true)
     var isSubmitButtonDisabled: Boolean by mutableStateOf(false)
 
@@ -75,6 +75,8 @@ class SignInViewModel : ViewModel() {
                     warningMessage = result.exception?.message.toString()
 
                     isSubmitButtonDisabled = false
+
+                    password = ""
                 }
             }
     }

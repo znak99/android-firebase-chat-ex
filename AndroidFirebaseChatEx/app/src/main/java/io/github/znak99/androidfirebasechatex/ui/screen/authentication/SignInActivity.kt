@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthField
 import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthHeader
 import io.github.znak99.androidfirebasechatex.ui.component.auth.AuthNavigationButton
@@ -44,8 +42,6 @@ import io.github.znak99.androidfirebasechatex.ui.screen.chat.FriendsListActivity
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
 import io.github.znak99.androidfirebasechatex.ui.theme.AppBlack
 import io.github.znak99.androidfirebasechatex.ui.theme.AppPrimary
-import io.github.znak99.androidfirebasechatex.ui.theme.AppSecondary
-import io.github.znak99.androidfirebasechatex.ui.theme.AppTertiary
 import io.github.znak99.androidfirebasechatex.ui.theme.AppWhite
 import io.github.znak99.androidfirebasechatex.viewmodel.SignInViewModel
 

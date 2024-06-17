@@ -1,5 +1,6 @@
 package io.github.znak99.androidfirebasechatex.ui.screen.authentication
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,38 +11,31 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.znak99.androidfirebasechatex.ui.theme.AndroidFirebaseChatExTheme
+import io.github.znak99.androidfirebasechatex.viewmodel.ResetPasswordViewModel
+import io.github.znak99.androidfirebasechatex.viewmodel.SignInViewModel
 
 class ResetPasswordActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // NOTE: ResetPasswordActivity UI
         setContent {
             AndroidFirebaseChatExTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                ResetPasswordScreen()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+private fun ResetPasswordScreen(viewModel: ResetPasswordViewModel = ResetPasswordViewModel()) {
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidFirebaseChatExTheme {
-        Greeting("Android")
-    }
+    // View context
+    val context = (LocalContext.current as Activity)
+    
 }

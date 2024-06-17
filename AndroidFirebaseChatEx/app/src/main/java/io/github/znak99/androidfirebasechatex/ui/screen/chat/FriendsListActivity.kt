@@ -10,8 +10,6 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -65,7 +63,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import io.github.znak99.androidfirebasechatex.app.DEFAULT_THUMBNAIL_IMAGE
 import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
-import io.github.znak99.androidfirebasechatex.app.REALTIME_DB_URL
+import io.github.znak99.androidfirebasechatex.app.REALTIME_DATABASE_URL
 import io.github.znak99.androidfirebasechatex.ui.component.chat.FriendsListHeaderMenu
 import io.github.znak99.androidfirebasechatex.model.firebase.User
 import io.github.znak99.androidfirebasechatex.ui.screen.authentication.SignInActivity
@@ -88,7 +86,7 @@ class FriendsListActivity : ComponentActivity() {
 
         // Initialize
         auth = Firebase.auth
-        database = FirebaseDatabase.getInstance(REALTIME_DB_URL).reference
+        database = FirebaseDatabase.getInstance(REALTIME_DATABASE_URL).reference
         storage = FirebaseStorage.getInstance(FIRESTORE_STORAGE_URL).reference
 
         // NOTE: ListActivity UI
