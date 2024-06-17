@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -15,7 +13,6 @@ import io.github.znak99.androidfirebasechatex.app.DEFAULT_THUMBNAIL_IMAGE
 import io.github.znak99.androidfirebasechatex.app.FIRESTORE_STORAGE_URL
 import io.github.znak99.androidfirebasechatex.app.REALTIME_DATABASE_URL
 import io.github.znak99.androidfirebasechatex.model.firebase.User
-import kotlin.math.sign
 
 class SignUpViewModel: ViewModel() {
 
@@ -114,8 +111,8 @@ class SignUpViewModel: ViewModel() {
                     usersRef.child(signedUpUser?.uid.toString())
                         .push().setValue(
                             User(
-                                uid = signedUpUser?.uid,
-                                email = signedUpUser?.email,
+                                uid = signedUpUser?.uid ?: "",
+                                email = signedUpUser?.email ?: "",
                                 username = username,
                                 thumbnailPath = FIRESTORE_STORAGE_URL + DEFAULT_THUMBNAIL_IMAGE,
                                 friendsId = listOf("")
@@ -148,6 +145,21 @@ class SignUpViewModel: ViewModel() {
 
         isSubmitButtonDisabled = false
 
+        checkEmailVerification()
+
+        _auth.signOut()
+
         completion()
+    }
+
+    private fun checkEmailVerification() {
+        val user = _auth.currentUser
+
+        user!!.sendEmailVerification()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "${user.email} verified!")
+                }
+            }
     }
 }

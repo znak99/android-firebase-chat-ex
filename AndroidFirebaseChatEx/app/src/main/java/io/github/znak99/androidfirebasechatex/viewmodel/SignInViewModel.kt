@@ -9,7 +9,9 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import io.github.znak99.androidfirebasechatex.app.REALTIME_DATABASE_URL
 
 class SignInViewModel : ViewModel() {
 
@@ -22,6 +24,7 @@ class SignInViewModel : ViewModel() {
 
     // Firebase
     private val _auth = Firebase.auth
+    private val _database = FirebaseDatabase.getInstance(REALTIME_DATABASE_URL).reference
 
     // Observable data
     var email: String by mutableStateOf("")
@@ -29,6 +32,7 @@ class SignInViewModel : ViewModel() {
     var warningMessage: String by mutableStateOf("")
     var isSaveEmailChecked: Boolean by mutableStateOf(true)
     var isSubmitButtonDisabled: Boolean by mutableStateOf(false)
+    var isShowEmailNotVerifiedAlert: Boolean by mutableStateOf(false)
 
     fun signIn(context: Activity, signedInCompletion: () -> Unit) {
 
@@ -62,11 +66,24 @@ class SignInViewModel : ViewModel() {
                     // Success
                     Log.d(TAG, "Successfully signed in with email and password.")
 
-                    saveEmail(context)
+                    // Make sure email verified user
+                    val user = _auth.currentUser
+                    Log.e(TAG, "Email verified status: ${user?.isEmailVerified}")
+                    if (user != null && user.isEmailVerified) {
+                        saveEmail(context)
 
-                    signedInCompletion()
+                        signedInCompletion()
 
-                    isSubmitButtonDisabled = false
+                        isSubmitButtonDisabled = false
+                    } else {
+                        _auth.signOut()
+
+                        isShowEmailNotVerifiedAlert = true
+
+                        isSubmitButtonDisabled = false
+
+                        password = ""
+                    }
                 } else {
                     // Failure
                     Log.e(TAG, "Failed to sign in with email and password.")

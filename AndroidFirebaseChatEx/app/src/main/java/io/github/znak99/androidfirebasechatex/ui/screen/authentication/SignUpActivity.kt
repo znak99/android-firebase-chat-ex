@@ -57,6 +57,7 @@ private fun SignUpScreen(viewModel: SignUpViewModel = SignUpViewModel()) {
     // View context
     val context = (LocalContext.current as Activity)
 
+    // View
     Scaffold { innerPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -158,7 +159,7 @@ private fun SignUpScreen(viewModel: SignUpViewModel = SignUpViewModel()) {
                 },
                 text = {
                     Text(
-                        text = "Signed up successfully!\nSign in and enjoy chat!",
+                        text = "Signed up successfully!\nYou can sign in after verify your email.",
                         fontWeight = FontWeight.SemiBold
                     )
                 },

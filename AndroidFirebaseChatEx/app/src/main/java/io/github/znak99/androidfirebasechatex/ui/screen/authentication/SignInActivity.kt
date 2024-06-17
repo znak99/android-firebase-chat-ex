@@ -19,8 +19,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -193,6 +197,36 @@ private fun SignInScreen(viewModel: SignInViewModel = SignInViewModel()) {
                 val intent = Intent(context, ResetPasswordActivity::class.java)
                 context.startActivity(intent)
             }
+        }
+
+        if (viewModel.isShowEmailNotVerifiedAlert) {
+            AlertDialog(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(imageVector = Icons.Filled.Person, contentDescription = "Person")
+                        Text(text = "Authentication system")
+                    }
+                },
+                text = {
+                    Text(
+                        text = "Your email hasn't been verified yet.\nPlease verify your email first.",
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
+                onDismissRequest = { viewModel.isShowEmailNotVerifiedAlert = false },
+                confirmButton = {
+                    Button(onClick = { /* TODO 이메일 재전송 화면으로 이동 */ }) {
+                        Text("Resend email?")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { viewModel.isShowEmailNotVerifiedAlert = false }) {
+                        Text("OK")
+                    }
+                }
+            )
         }
     }
 }
